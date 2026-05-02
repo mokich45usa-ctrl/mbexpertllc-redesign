@@ -1,0 +1,9 @@
+{
+  "_id": "pricing-roadside",
+  "_type": "pricingPlan",
+  "title": "Roadside Assistance",
+  "price": "$20.99",
+  "summary": "Fast-response help when a vehicle is stuck and needs on-site diagnosis or a quick fix.",
+  "features": ["On-site inspection", "Battery help", "Issue triage"],
+  "featured": false
+}

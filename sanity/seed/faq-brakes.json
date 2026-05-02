@@ -1,0 +1,20 @@
+{
+  "_id": "faq-brakes",
+  "_type": "faqItem",
+  "question": "When should I book a mobile brake inspection or replacement service?",
+  "answer": [
+    {
+      "_type": "block",
+      "_key": "a1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a1s1",
+          "text": "If you hear squealing, feel vibration, or notice longer stopping distances, book an inspection as soon as possible."
+        }
+      ]
+    }
+  ],
+  "featured": true
+}

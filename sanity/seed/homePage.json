@@ -1,0 +1,83 @@
+{
+  "_id": "homePage",
+  "_type": "homePage",
+  "heroEyebrow": "MB EXPERT LLC",
+  "heroTitle": "Professional Mobile Mechanic and Locksmith Service",
+  "heroDescription": "We bring diagnostics, repair, and lockout support directly to your location in Northern Michigan.",
+  "primaryCtaLabel": "SCHEDULE SERVICE",
+  "primaryCtaHref": "/contact-us",
+  "secondaryCtaLabel": "VIEW SERVICES",
+  "secondaryCtaHref": "/services",
+  "trustPoints": [
+    "Mobile service at your location",
+    "Dealer-level diagnostics",
+    "Northern Michigan coverage"
+  ],
+  "aboutTitle": "About Us",
+  "aboutBody": [
+    {
+      "_type": "block",
+      "_key": "a1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a1s1",
+          "text": "MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners throughout Northern Michigan."
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "_key": "a2",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a2s1",
+          "text": "We arrive fully equipped with advanced diagnostic tools so problems can be solved on the spot without towing the vehicle."
+        }
+      ]
+    }
+  ],
+  "featuredServices": [
+    { "_type": "reference", "_ref": "service-comprehensive-system-scanning", "_key": "s1" },
+    { "_type": "reference", "_ref": "service-dtc-analysis", "_key": "s2" },
+    { "_type": "reference", "_ref": "service-live-data", "_key": "s3" },
+    { "_type": "reference", "_ref": "service-service-light-reset", "_key": "s4" }
+  ],
+  "processSteps": [
+    {
+      "_key": "p1",
+      "title": "Choose Your Service",
+      "description": "Pick the support you need and request an appointment."
+    },
+    {
+      "_key": "p2",
+      "title": "Make an Appointment",
+      "description": "We confirm the details and schedule a time that works."
+    },
+    {
+      "_key": "p3",
+      "title": "We Come to You",
+      "description": "Our technician arrives on site and gets the job done."
+    }
+  ],
+  "featuredTestimonials": [
+    { "_type": "reference", "_ref": "testimonial-john-smith", "_key": "t1" },
+    { "_type": "reference", "_ref": "testimonial-jane-doe", "_key": "t2" },
+    { "_type": "reference", "_ref": "testimonial-michael-brown", "_key": "t3" }
+  ],
+  "featuredFaqs": [
+    { "_type": "reference", "_ref": "faq-oil-change", "_key": "f1" },
+    { "_type": "reference", "_ref": "faq-battery", "_key": "f2" },
+    { "_type": "reference", "_ref": "faq-brakes", "_key": "f3" },
+    { "_type": "reference", "_ref": "faq-leased-vehicle", "_key": "f4" }
+  ],
+  "featuredPlans": [
+    { "_type": "reference", "_ref": "pricing-wheel-alignment", "_key": "pr1" },
+    { "_type": "reference", "_ref": "pricing-synthetic-oil", "_key": "pr2" },
+    { "_type": "reference", "_ref": "pricing-roadside", "_key": "pr3" }
+  ],
+  "contactNote": "Call or text us at 231-392-6204 and we will help you schedule service."
+}

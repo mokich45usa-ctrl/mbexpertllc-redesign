@@ -1,0 +1,11 @@
+{
+  "_id": "siteSettings",
+  "_type": "siteSettings",
+  "companyName": "MB Expert LLC",
+  "tagline": "Professional Mobile Mechanic and Locksmith Service",
+  "primaryPhone": "231-392-6204",
+  "primaryEmail": "mbexpertllc@gmail.com",
+  "serviceArea": "Northern Michigan",
+  "hours": "8:00am - 10:00pm (All Days)",
+  "accentColor": "#66A6A5"
+}

@@ -1,0 +1,9 @@
+{
+  "_id": "service-service-light-reset",
+  "_type": "service",
+  "title": "Service Light Reset",
+  "slug": { "_type": "slug", "current": "service-light-reset" },
+  "shortDescription": "Professional clearing of dashboard maintenance indicators after service is complete.",
+  "featured": true,
+  "sortOrder": 4
+}

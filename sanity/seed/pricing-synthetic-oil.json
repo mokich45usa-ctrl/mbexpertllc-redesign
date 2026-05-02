@@ -1,0 +1,9 @@
+{
+  "_id": "pricing-synthetic-oil",
+  "_type": "pricingPlan",
+  "title": "Synthetic Oil Change",
+  "price": "$24.99",
+  "summary": "Mobile oil service performed on site with the convenience of driveway or workplace service.",
+  "features": ["Oil change", "Filter swap", "Fluid inspection"],
+  "featured": true
+}

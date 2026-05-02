@@ -1,0 +1,9 @@
+{
+  "_id": "service-live-data",
+  "_type": "service",
+  "title": "Live Data Stream Monitoring",
+  "slug": { "_type": "slug", "current": "live-data-stream-monitoring" },
+  "shortDescription": "Real-time analysis of engine and sensor performance data to identify intermittent faults.",
+  "featured": true,
+  "sortOrder": 3
+}

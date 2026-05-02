@@ -1,0 +1,20 @@
+{
+  "_id": "faq-battery",
+  "_type": "faqItem",
+  "question": "Should I call a mobile mechanic to check or charge my battery?",
+  "answer": [
+    {
+      "_type": "block",
+      "_key": "a1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a1s1",
+          "text": "Yes, if the car is slow to crank, needs a jump, or the battery warning light is on. We can test charging and starting systems on site."
+        }
+      ]
+    }
+  ],
+  "featured": true
+}

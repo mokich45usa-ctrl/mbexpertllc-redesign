@@ -1,0 +1,20 @@
+{
+  "_id": "faq-leased-vehicle",
+  "_type": "faqItem",
+  "question": "Do I need regular servicing for my leased vehicle with a mobile mechanic?",
+  "answer": [
+    {
+      "_type": "block",
+      "_key": "a1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "a1s1",
+          "text": "Yes. Keeping up with the manufacturer schedule helps avoid lease-end issues and keeps the vehicle in safe operating condition."
+        }
+      ]
+    }
+  ],
+  "featured": true
+}

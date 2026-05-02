@@ -1,0 +1,8 @@
+{
+  "_id": "testimonial-jane-doe",
+  "_type": "testimonial",
+  "name": "Jane Doe",
+  "role": "Local Customer",
+  "quote": "Fast response, clear communication, and the repair was handled right in my driveway. Exactly the kind of service I wanted.",
+  "rating": 5
+}

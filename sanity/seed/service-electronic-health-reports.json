@@ -1,0 +1,9 @@
+{
+  "_id": "service-electronic-health-reports",
+  "_type": "service",
+  "title": "Electronic Health Reports",
+  "slug": { "_type": "slug", "current": "electronic-health-reports" },
+  "shortDescription": "A detailed overview of your vehicle’s electronic ecosystem and communication status.",
+  "featured": false,
+  "sortOrder": 5
+}

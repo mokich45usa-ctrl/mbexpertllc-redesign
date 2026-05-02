@@ -1,0 +1,9 @@
+{
+  "_id": "service-comprehensive-system-scanning",
+  "_type": "service",
+  "title": "Comprehensive System Scanning",
+  "slug": { "_type": "slug", "current": "comprehensive-system-scanning" },
+  "shortDescription": "A complete health check of all vehicle control modules to ensure every system is communicating correctly.",
+  "featured": true,
+  "sortOrder": 1
+}

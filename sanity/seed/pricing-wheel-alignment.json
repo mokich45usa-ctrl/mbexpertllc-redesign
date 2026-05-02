@@ -1,0 +1,9 @@
+{
+  "_id": "pricing-wheel-alignment",
+  "_type": "pricingPlan",
+  "title": "Wheel Alignment Special",
+  "price": "$20.99",
+  "summary": "A simple maintenance package for alignment checks and steering feel.",
+  "features": ["Alignment review", "Basic steering check", "Clear service notes"],
+  "featured": true
+}

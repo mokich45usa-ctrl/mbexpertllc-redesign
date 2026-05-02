@@ -1,7 +1,67 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
+import { sanityFetch } from "../lib/sanity/client";
+import { homePageQuery, siteSettingsQuery } from "../lib/sanity/queries";
 
-const services = [
+type HomePageContent = {
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  trustPoints?: string[];
+  aboutTitle?: string;
+  aboutBody?: Array<{
+    _type?: string;
+    children?: Array<{ text?: string }>;
+  }>;
+  featuredServices?: Array<{
+    _id: string;
+    title: string;
+    shortDescription?: string;
+  }>;
+  processSteps?: Array<{
+    title: string;
+    description?: string;
+  }>;
+  featuredTestimonials?: Array<{
+    _id: string;
+    name: string;
+    role?: string;
+    quote: string;
+    rating?: number;
+  }>;
+  featuredFaqs?: Array<{
+    _id: string;
+    question: string;
+    answer?: Array<{
+      children?: Array<{ text?: string }>;
+    }>;
+  }>;
+  featuredPlans?: Array<{
+    _id: string;
+    title: string;
+    price: string;
+    summary?: string;
+    features?: string[];
+    featured?: boolean;
+  }>;
+  contactNote?: string;
+};
+
+type SiteSettings = {
+  companyName?: string;
+  tagline?: string;
+  primaryPhone?: string;
+  primaryEmail?: string;
+  serviceArea?: string;
+  hours?: string;
+  accentColor?: string;
+};
+
+const fallbackServices = [
   {
     title: "Comprehensive System Scanning",
     description:
@@ -40,7 +100,7 @@ const services = [
   },
 ];
 
-const processSteps = [
+const fallbackProcessSteps = [
   {
     title: "Choose Your Service",
     image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4375.png",
@@ -55,7 +115,7 @@ const processSteps = [
   },
 ];
 
-const testimonials = [
+const fallbackTestimonials = [
   {
     name: "John Smith",
     role: "Marketing Head",
@@ -76,14 +136,14 @@ const testimonials = [
   },
 ];
 
-const faqs = [
+const fallbackFaqs = [
   "How often should I book a mobile oil change service?",
   "Do I need regular servicing for my leased vehicle with a mobile mechanic?",
   "Should I call a mobile mechanic to check or charge my battery?",
   "When should I book a mobile brake inspection or replacement service?",
 ];
 
-const pricingPlans = [
+const fallbackPricingPlans = [
   {
     title: "Wheel Alignment Special",
     price: "$20.99",
@@ -101,15 +161,96 @@ const pricingPlans = [
   },
 ];
 
-export default function HomePage() {
+function blocksToParagraphs(
+  blocks?: Array<{
+    children?: Array<{ text?: string }>;
+  }>
+) {
+  const paragraphs = blocks
+    ?.map((block) => block.children?.map((child) => child.text ?? "").join("").trim())
+    .filter((paragraph): paragraph is string => Boolean(paragraph)) ?? [];
+
+  return paragraphs.length > 0
+    ? paragraphs
+    : [
+        "MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners throughout Northern Michigan.",
+        "We arrive fully equipped with advanced diagnostic tools so problems can be solved on the spot without towing the vehicle.",
+      ];
+}
+
+export default async function HomePage() {
+  const [homePage, siteSettings] = await Promise.all([
+    sanityFetch<HomePageContent>(homePageQuery),
+    sanityFetch<SiteSettings>(siteSettingsQuery),
+  ]);
+
+  const services = (homePage?.featuredServices?.length
+    ? homePage.featuredServices.map((service, index) => ({
+        title: service.title,
+        description: service.shortDescription ?? fallbackServices[index % fallbackServices.length].description,
+        image: fallbackServices[index % fallbackServices.length].image,
+      }))
+    : fallbackServices);
+
+  const processSteps = homePage?.processSteps?.length
+    ? homePage.processSteps.map((step, index) => ({
+        title: step.title,
+        image: fallbackProcessSteps[index % fallbackProcessSteps.length].image,
+        description: step.description ?? "",
+      }))
+    : fallbackProcessSteps.map((step) => ({ ...step, description: "" }));
+
+  const testimonials = (homePage?.featuredTestimonials?.length
+    ? homePage.featuredTestimonials.map((item, index) => ({
+        name: item.name,
+        role: item.role ?? fallbackTestimonials[index % fallbackTestimonials.length].role,
+        quote: item.quote,
+      }))
+    : fallbackTestimonials);
+
+  const faqs = (homePage?.featuredFaqs?.length
+    ? homePage.featuredFaqs.map((item) => ({
+        question: item.question,
+        answer:
+          item.answer?.map((block) => block.children?.map((child) => child.text ?? "").join("")).join(" ") ??
+          "Additional details are available in the Studio.",
+      }))
+    : fallbackFaqs.map((question) => ({
+        question,
+        answer:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, neque qui velit. Magni dolorum quidem ipsam eligendi, totam, facilis laudantium cum accusamus ullam voluptatibus commodi numquam, error, est. Ea, consequatur.",
+      })));
+
+  const pricingPlans = (homePage?.featuredPlans?.length
+    ? homePage.featuredPlans.map((plan, index) => ({
+        title: plan.title,
+        price: plan.price,
+        image: fallbackPricingPlans[index % fallbackPricingPlans.length].image,
+      }))
+    : fallbackPricingPlans);
+
+  const aboutParagraphs = blocksToParagraphs(homePage?.aboutBody);
+  const heroEyebrow = homePage?.heroEyebrow ?? siteSettings?.companyName ?? "MB EXPERT LLC";
+  const heroTitle = homePage?.heroTitle ?? "Professional Mobile Mechanic and Locksmith Service";
+  const heroDescription =
+    homePage?.heroDescription ?? "We bring diagnostics, repair, and lockout support directly to your location in Northern Michigan.";
+  const primaryCtaLabel = homePage?.primaryCtaLabel ?? "SCHEDULE SERVICE";
+  const primaryCtaHref = homePage?.primaryCtaHref ?? "/contact-us";
+  const secondaryCtaLabel = homePage?.secondaryCtaLabel ?? "VIEW SERVICES";
+  const secondaryCtaHref = homePage?.secondaryCtaHref ?? "/services";
+  const topbarHours = siteSettings?.hours ?? "8:00am- 10:00pm (All Days)";
+  const topbarPhone = siteSettings?.primaryPhone ?? "231-392-6204";
+  const topbarArea = siteSettings?.serviceArea ?? "Northern Michigan";
+  const companyEmail = siteSettings?.primaryEmail ?? "mbexpertllc@gmail.com";
+
   return (
     <main className="site">
       <div className="topbar">
-        <div className="topbar__item">8:00am- 10:00pm (All Days)</div>
-        <a className="topbar__item" href="tel:231-392-6204">
-          Call Now/Text 231-392-6204
+        <div className="topbar__item">{topbarHours}</div>
+        <a className="topbar__item" href={`tel:${topbarPhone}`}>
+          Call Now/Text {topbarPhone}
         </a>
-        <div className="topbar__item">Northern Michigan</div>
+        <div className="topbar__item">{topbarArea}</div>
       </div>
 
       <header className="header">
@@ -148,11 +289,17 @@ export default function HomePage() {
         }
       >
         <div className="hero__content">
-          <div className="hero__eyebrow">MB EXPERT LLC</div>
-          <h1>Professional Mobile Mechanic and Locksmith Service</h1>
-          <a className="button button--solid" href="/contact-us">
-            SCHEDULE SERVICE
-          </a>
+          <div className="hero__eyebrow">{heroEyebrow}</div>
+          <h1>{heroTitle}</h1>
+          <p className="hero__description">{heroDescription}</p>
+          <div className="hero__actions">
+            <a className="button button--solid" href={primaryCtaHref}>
+              {primaryCtaLabel}
+            </a>
+            <a className="button button--outline" href={secondaryCtaHref}>
+              {secondaryCtaLabel}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -184,19 +331,10 @@ export default function HomePage() {
           />
         </div>
         <div className="content-block">
-          <div className="section__title">About Us</div>
-          <p>
-            MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners
-            throughout Northern Michigan. We understand how valuable your time is, which is why we bring modern auto
-            service directly to you at your home, workplace parking lot, or right at the location of an unexpected
-            breakdown.
-          </p>
-          <p>
-            Modern vehicles are complex systems that require precision, deep knowledge, and the right tools. Instead of
-            wasting time driving to a dealership or waiting for a tow truck, you get highly qualified assistance
-            wherever it is convenient for you. We arrive fully equipped with advanced, dealer-level diagnostic tools and
-            software, allowing us to solve technical problems of any complexity right on the spot.
-          </p>
+          <div className="section__title">{homePage?.aboutTitle ?? "About Us"}</div>
+          {aboutParagraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
           <a className="button button--outline" href="/about-us">
             More About Us
           </a>
@@ -232,6 +370,7 @@ export default function HomePage() {
               <h3>
                 <a href="/contact-us">{step.title}</a>
               </h3>
+              <p>{step.description}</p>
               <span className="step-card__index">0{index + 1}</span>
             </article>
           ))}
@@ -265,13 +404,9 @@ export default function HomePage() {
         <div className="section__title">Frequently Asked Questions</div>
         <div className="faq-list">
           {faqs.map((question) => (
-            <details className="faq-item" key={question}>
-              <summary>{question}</summary>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, neque qui velit. Magni dolorum quidem
-                ipsam eligendi, totam, facilis laudantium cum accusamus ullam voluptatibus commodi numquam, error, est.
-                Ea, consequatur.
-              </p>
+            <details className="faq-item" key={question.question}>
+              <summary>{question.question}</summary>
+              <p>{question.answer}</p>
             </details>
           ))}
         </div>
@@ -300,17 +435,17 @@ export default function HomePage() {
           <div>
             <div className="section__title">Contact Info</div>
             <ul className="footer__list">
-              <li>Northern Michigan</li>
+              <li>{topbarArea}</li>
               <li>
-                <a href="tel:231-392-6204">231-392-6204</a>
+                <a href={`tel:${topbarPhone}`}>{topbarPhone}</a>
               </li>
               <li>
-                <a href="mailto:mbexpertllc@gmail.com">mbexpertllc@gmail.com</a>
+                <a href={`mailto:${companyEmail}`}>{companyEmail}</a>
               </li>
             </ul>
             <div className="section__title footer__title">Opening Hours</div>
             <ul className="footer__list">
-              <li>8:00am- 10:00pm (All Days)</li>
+              <li>{topbarHours}</li>
             </ul>
           </div>
           <div className="footer__gallery">

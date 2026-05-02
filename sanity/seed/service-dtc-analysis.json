@@ -1,0 +1,9 @@
+{
+  "_id": "service-dtc-analysis",
+  "_type": "service",
+  "title": "DTC Analysis & Interpretation",
+  "slug": { "_type": "slug", "current": "dtc-analysis-interpretation" },
+  "shortDescription": "Expert reading and interpretation of active and stored Diagnostic Trouble Codes (DTCs).",
+  "featured": true,
+  "sortOrder": 2
+}
