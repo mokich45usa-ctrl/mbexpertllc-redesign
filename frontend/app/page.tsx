@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 
 const services = [
@@ -137,24 +138,21 @@ export default function HomePage() {
         </a>
       </header>
 
-      <section className="hero">
-        <div className="hero__media">
-          <Image
-            src="https://mbexpertllc.com/wp-content/uploads/2026/03/muscular-car-service-worker-repairing-vehicle-scaled.jpg"
-            alt="Picture showing muscular car service worker repairing vehicle"
-            fill
-            priority
-            sizes="(max-width: 900px) 100vw, 60vw"
-            className="hero__bg"
-          />
-          <div className="hero__overlay" />
-          <div className="hero__content">
-            <div className="hero__eyebrow">MB EXPERT LLC</div>
-            <h1>Professional Mobile Mechanic and Locksmith Service</h1>
-            <a className="button button--solid" href="/contact-us">
-              SCHEDULE SERVICE
-            </a>
-          </div>
+      <section
+        className="hero"
+        style={
+          {
+            ["--hero-image" as string]:
+              'url("https://mbexpertllc.com/wp-content/uploads/2026/03/muscular-car-service-worker-repairing-vehicle-scaled.jpg")',
+          } as CSSProperties
+        }
+      >
+        <div className="hero__content">
+          <div className="hero__eyebrow">MB EXPERT LLC</div>
+          <h1>Professional Mobile Mechanic and Locksmith Service</h1>
+          <a className="button button--solid" href="/contact-us">
+            SCHEDULE SERVICE
+          </a>
         </div>
       </section>
 
