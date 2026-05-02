@@ -1,265 +1,339 @@
 import Image from "next/image";
-import { sanityFetch } from "../lib/sanity/client";
-import { homePageQuery, siteSettingsQuery } from "../lib/sanity/queries";
 
-type HomePage = {
-  heroEyebrow?: string;
-  heroTitle?: string;
-  heroDescription?: string;
-  primaryCtaLabel?: string;
-  primaryCtaHref?: string;
-  secondaryCtaLabel?: string;
-  secondaryCtaHref?: string;
-  trustPoints?: string[];
-  aboutTitle?: string;
-  contactNote?: string;
-  featuredServices?: Array<{
-    _id: string;
-    title?: string;
-    shortDescription?: string;
-  }>;
-  processSteps?: Array<{
-    title?: string;
-    description?: string;
-  }>;
-  featuredTestimonials?: Array<{
-    _id: string;
-    name?: string;
-    quote?: string;
-  }>;
-  featuredFaqs?: Array<{
-    _id: string;
-    question?: string;
-  }>;
-  featuredPlans?: Array<{
-    _id: string;
-    title?: string;
-    price?: string;
-  }>;
-};
+const services = [
+  {
+    title: "Comprehensive System Scanning",
+    description:
+      "A complete health check of all vehicle control modules to ensure every system is communicating correctly.",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4375.png",
+  },
+  {
+    title: "DTC Analysis & Interpretation",
+    description:
+      "Expert reading and interpretation of active and stored Diagnostic Trouble Codes (DTCs).",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4376-1.png",
+  },
+  {
+    title: "Live Data Stream Monitoring",
+    description:
+      "Real-time analysis of engine and sensor performance data to identify intermittent faults.",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4377.png",
+  },
+  {
+    title: "Service Light Reset",
+    description:
+      'Professional clearing of "Check Engine," "Service Engine Soon," and other dashboard maintenance indicators.',
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4375.png",
+  },
+  {
+    title: "Electronic Health Reports",
+    description:
+      "A detailed overview of your vehicle’s electronic ecosystem and communication status.",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4376-1.png",
+  },
+  {
+    title: "Advanced Performance Testing",
+    description:
+      "On-site compression and vacuum testing to evaluate engine efficiency and management systems.",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4377.png",
+  },
+];
 
-type SiteSettings = {
-  companyName?: string;
-  tagline?: string;
-  primaryPhone?: string;
-  serviceArea?: string;
-};
+const processSteps = [
+  {
+    title: "Choose Your Service",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4375.png",
+  },
+  {
+    title: "Make an APPOINTMENT",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4376-1.png",
+  },
+  {
+    title: "We’ll take YOUR CAR for repair",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/Group-4377.png",
+  },
+];
 
-export default async function HomePage() {
-  const [home, settings] = await Promise.all([
-    sanityFetch<HomePage>(homePageQuery),
-    sanityFetch<SiteSettings>(siteSettingsQuery),
-  ]);
+const testimonials = [
+  {
+    name: "John Smith",
+    role: "Marketing Head",
+    quote:
+      "Steve did a good job. You was one of the nicest mechanic I’ve ever worked with in the past 10 years. Big thank you. Hi I am very happy with their service. I just want to say thank you for looking after my car and Resolve my problems.",
+  },
+  {
+    name: "John Smith",
+    role: "Marketing Head",
+    quote:
+      "Steve did a good job. You was one of the nicest mechanic I’ve ever worked with in the past 10 years. Big thank you. Hi I am very happy with their service. I just want to say thank you for looking after my car and Resolve my problems.",
+  },
+  {
+    name: "John Smith",
+    role: "Marketing Head",
+    quote:
+      "Steve did a good job. You was one of the nicest mechanic I’ve ever worked with in the past 10 years. Big thank you. Hi I am very happy with their service. I just want to say thank you for looking after my car and Resolve my problems.",
+  },
+];
 
-  const title = home?.heroTitle ?? "Professional Mobile Mechanic and Locksmith Service";
-  const eyebrow = home?.heroEyebrow ?? settings?.companyName ?? "MB Expert LLC";
-  const featuredServices = home?.featuredServices ?? [
-    {
-      _id: "diagnostics",
-      title: "Advanced Diagnostics",
-      shortDescription: "Dealer-level scanning, DTC interpretation, and live data checks.",
-    },
-    {
-      _id: "maintenance",
-      title: "Mobile Maintenance",
-      shortDescription: "Oil changes, service resets, battery checks, and preventive care.",
-    },
-    {
-      _id: "roadside",
-      title: "Roadside Support",
-      shortDescription: "On-site help when the car needs attention where it stopped.",
-    },
-  ];
+const faqs = [
+  "How often should I book a mobile oil change service?",
+  "Do I need regular servicing for my leased vehicle with a mobile mechanic?",
+  "Should I call a mobile mechanic to check or charge my battery?",
+  "When should I book a mobile brake inspection or replacement service?",
+];
 
-  const processSteps = home?.processSteps ?? [
-    { title: "Choose service", description: "Select the problem or maintenance need." },
-    { title: "Book an appointment", description: "We confirm timing and location quickly." },
-    { title: "We come to you", description: "The work happens at home, work, or roadside." },
-  ];
+const pricingPlans = [
+  {
+    title: "Wheel Alignment Special",
+    price: "$20.99",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/pricing-box02_img02.png.png",
+  },
+  {
+    title: "Synthetic Oil Change",
+    price: "$24.99",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/pricing-box02_img01.png.png",
+  },
+  {
+    title: "Roadside Assistance",
+    price: "$20.99",
+    image: "https://mbexpertllc.com/wp-content/uploads/2026/03/pricing-box02_img02.png.png",
+  },
+];
 
-  const pricingPlans = home?.featuredPlans ?? [
-    { _id: "plan-1", title: "Oil Change", price: "$24.99" },
-    { _id: "plan-2", title: "Wheel Alignment Special", price: "$20.99" },
-    { _id: "plan-3", title: "Roadside Assistance", price: "$20.99" },
-  ];
-
-  const faqs = home?.featuredFaqs ?? [
-    { _id: "faq-1", question: "How often should I book mobile maintenance?" },
-    { _id: "faq-2", question: "Do I need towing for diagnostic service?" },
-    { _id: "faq-3", question: "Can you help at my workplace?" },
-  ];
-
+export default function HomePage() {
   return (
-    <main className="page-shell">
-      <header className="site-header">
-        <div className="logo-mark">
-          <div className="logo-dot" />
-          <div>
-            <strong>MB Expert LLC</strong>
-            <span>Mobile Mechanic + Locksmith</span>
-          </div>
-        </div>
-        <nav className="nav-links" aria-label="Primary">
-          <a href="#services">Services</a>
-          <a href="#process">Process</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
+    <main className="site">
+      <div className="topbar">
+        <div className="topbar__item">8:00am- 10:00pm (All Days)</div>
+        <a className="topbar__item" href="tel:231-392-6204">
+          Call Now/Text 231-392-6204
+        </a>
+        <div className="topbar__item">Northern Michigan</div>
+      </div>
+
+      <header className="header">
+        <a className="brand" href="/">
+          <Image
+            src="https://mbexpertllc.com/wp-content/uploads/2026/03/image-removebg-preview-e1775584985293.png"
+            alt="MB Expert LLC"
+            width={483}
+            height={283}
+            className="brand__logo"
+            priority
+          />
+        </a>
+
+        <nav className="nav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/about-us">About Us</a>
+          <a href="/services">Services</a>
+          <a href="/blogs">Blogs</a>
+          <a href="/gallery">Gallery</a>
+          <a href="/contact-us">Contact Us</a>
         </nav>
-        <a className="button button-primary header-cta" href={home?.primaryCtaHref ?? "/contact"}>
-          {home?.primaryCtaLabel ?? "Schedule Service"}
+
+        <a className="button button--solid header__cta" href="/contact-us">
+          Appointment
         </a>
       </header>
 
       <section className="hero">
-        <div>
-          <span className="eyebrow">{eyebrow}</span>
-          <h1>{title}</h1>
+        <div className="hero__media">
+          <Image
+            src="https://mbexpertllc.com/wp-content/uploads/2026/03/muscular-car-service-worker-repairing-vehicle-scaled.jpg"
+            alt="Picture showing muscular car service worker repairing vehicle"
+            fill
+            priority
+            sizes="(max-width: 900px) 100vw, 60vw"
+            className="hero__bg"
+          />
+          <div className="hero__overlay" />
+          <div className="hero__content">
+            <div className="hero__eyebrow">MB EXPERT LLC</div>
+            <h1>Professional Mobile Mechanic and Locksmith Service</h1>
+            <a className="button button--solid" href="/contact-us">
+              SCHEDULE SERVICE
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="estimate section">
+        <div className="section__title">Get a Free Estimate</div>
+        <form className="estimate__form">
+          <input placeholder="ZIP Code" />
+          <input placeholder="Year" />
+          <input placeholder="Make" />
+          <input placeholder="Model" />
+          <input placeholder="Sub Model" />
+          <input placeholder="Engine" />
+          <input placeholder="VIN Code" />
+          <textarea placeholder="Describe your issue" rows={4} />
+          <button type="button" className="button button--solid estimate__submit">
+            Request An Estimate
+          </button>
+        </form>
+      </section>
+
+      <section className="about section section--split">
+        <div className="about__imageWrap">
+          <Image
+            src="https://mbexpertllc.com/wp-content/uploads/2026/03/11887-e1772742262479.jpg"
+            alt="About MB Expert LLC"
+            fill
+            sizes="(max-width: 900px) 100vw, 40vw"
+            className="cover"
+          />
+        </div>
+        <div className="content-block">
+          <div className="section__title">About Us</div>
           <p>
-            {home?.heroDescription ??
-              settings?.tagline ??
-              "Mobile service that comes to your home, workplace, or roadside with a calmer, cleaner presentation and clearer calls to action."}
+            MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners
+            throughout Northern Michigan. We understand how valuable your time is, which is why we bring modern auto
+            service directly to you at your home, workplace parking lot, or right at the location of an unexpected
+            breakdown.
           </p>
-          <div className="actions">
-            <a className="button button-primary" href={home?.primaryCtaHref ?? "/contact"}>
-              {home?.primaryCtaLabel ?? "Schedule Service"}
-            </a>
-            <a className="button button-secondary" href={home?.secondaryCtaHref ?? "/services"}>
-              {home?.secondaryCtaLabel ?? "View Services"}
-            </a>
-          </div>
-        </div>
-
-        <div className="hero-panel">
-          <div className="hero-panel-media">
-            <Image
-              src="https://mbexpertllc.com/wp-content/uploads/2026/03/image-removebg-preview-e1775584985293.png"
-              alt="MB Expert LLC logo"
-              width={483}
-              height={283}
-              className="hero-logo"
-              priority
-            />
-          </div>
-          <div className="hero-panel-grid">
-            <div className="info-chip">
-              <span>Call</span>
-              <strong>{settings?.primaryPhone ?? "231-392-6204"}</strong>
-            </div>
-            <div className="info-chip">
-              <span>Area</span>
-              <strong>{settings?.serviceArea ?? "Northern Michigan"}</strong>
-            </div>
-            <div className="info-chip">
-              <span>Hours</span>
-              <strong>{settings?.hours ?? "8:00am-10:00pm"}</strong>
-            </div>
-            <div className="info-chip">
-              <span>Email</span>
-              <strong>{settings?.primaryEmail ?? "mbexpertllc@gmail.com"}</strong>
-            </div>
-          </div>
+          <p>
+            Modern vehicles are complex systems that require precision, deep knowledge, and the right tools. Instead of
+            wasting time driving to a dealership or waiting for a tow truck, you get highly qualified assistance
+            wherever it is convenient for you. We arrive fully equipped with advanced, dealer-level diagnostic tools and
+            software, allowing us to solve technical problems of any complexity right on the spot.
+          </p>
+          <a className="button button--outline" href="/about-us">
+            More About Us
+          </a>
         </div>
       </section>
 
-      <section className="band">
-        <div className="stat">
-          <strong>24/7</strong>
-          <span>availability style window</span>
-        </div>
-        <div className="stat">
-          <strong>Mobile</strong>
-          <span>service at your location</span>
-        </div>
-        <div className="stat">
-          <strong>Dealer</strong>
-          <span>level diagnostics approach</span>
-        </div>
-        <div className="stat">
-          <strong>Local</strong>
-          <span>Northern Michigan focus</span>
-        </div>
-      </section>
-
-      <section className="section-block" id="services">
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">Services</span>
-            <h2 className="section-title">A cleaner service architecture with fewer distractions.</h2>
-          </div>
-          <p className="section-copy">
-            The current site has useful content, but the layout is doing too much. This version makes the services feel more premium and easier to scan.
-          </p>
-        </div>
-        <div className="card-grid">
-          {featuredServices.slice(0, 3).map((service) => (
-            <article className="card" key={service._id}>
+      <section className="section">
+        <div className="section__title">Our Services</div>
+        <p className="section__lead">We offer full service auto repair &amp; maintenance &amp; Locksmith</p>
+        <div className="divider" />
+        <div className="service-grid">
+          {services.map((service) => (
+            <article className="service-card" key={service.title}>
+              <Image src={service.image} alt="" width={246} height={246} className="service-card__image" />
               <h3>{service.title}</h3>
-              <p className="section-copy">{service.shortDescription}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block" id="process">
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">How it works</span>
-            <h2 className="section-title">Three simple steps to get the job moving.</h2>
-          </div>
-        </div>
-        <div className="card-grid">
-          {processSteps.map((step, index) => (
-            <article className="card" key={`${step.title}-${index}`}>
-              <div className="step-index">0{index + 1}</div>
-              <h3>{step.title}</h3>
-              <p className="section-copy">{step.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block" id="pricing">
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">Pricing</span>
-            <h2 className="section-title">Simple pricing cards instead of a cluttered sales block.</h2>
-          </div>
-        </div>
-        <div className="pricing-grid">
-          {pricingPlans.map((plan) => (
-            <article className="pricing-card" key={plan._id}>
-              <span className="pricing-price">{plan.price}</span>
-              <h3>{plan.title}</h3>
-              <p className="section-copy">
-                {home?.contactNote ?? "Clean, conversion-focused presentation with room for Sanity data later."}
-              </p>
-              <a className="button button-secondary" href={home?.primaryCtaHref ?? "/contact"}>
-                Book now
+              <p>{service.description}</p>
+              <a href="/services" className="service-card__link">
+                Learn More
               </a>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section-block" id="faq">
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">FAQ</span>
-            <h2 className="section-title">Questions clients usually need answered fast.</h2>
-          </div>
+      <section className="section">
+        <div className="section__title">How It Works</div>
+        <p className="section__lead">These few steps will help return your car to a working condition.</p>
+        <div className="divider" />
+        <div className="steps-grid">
+          {processSteps.map((step, index) => (
+            <article className="step-card" key={step.title}>
+              <Image src={step.image} alt="" width={246} height={246} className="step-card__image" />
+              <h3>
+                <a href="/contact-us">{step.title}</a>
+              </h3>
+              <span className="step-card__index">0{index + 1}</span>
+            </article>
+          ))}
         </div>
+      </section>
+
+      <section className="section testimonials">
+        <div className="testimonial-strip">
+          {testimonials.map((item) => (
+            <article className="testimonial-card" key={item.quote}>
+              <p className="testimonial-card__quote">{item.quote}</p>
+              <div className="testimonial-card__meta">
+                <Image
+                  src="https://mbexpertllc.com/wp-content/uploads/2026/03/testimonials02_img02.jpg.png"
+                  alt={item.name}
+                  width={90}
+                  height={90}
+                  className="testimonial-card__avatar"
+                />
+                <div>
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section faq">
+        <div className="section__title">Frequently Asked Questions</div>
         <div className="faq-list">
-          {faqs.map((faq) => (
-            <details className="faq-item" key={faq._id}>
-              <summary>{faq.question}</summary>
-              <p className="section-copy">
-                {home?.contactNote ??
-                  "This answer can be written in Sanity once the content model is connected."}
+          {faqs.map((question) => (
+            <details className="faq-item" key={question}>
+              <summary>{question}</summary>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, neque qui velit. Magni dolorum quidem
+                ipsam eligendi, totam, facilis laudantium cum accusamus ullam voluptatibus commodi numquam, error, est.
+                Ea, consequatur.
               </p>
             </details>
           ))}
         </div>
       </section>
+
+      <section className="section pricing">
+        <div className="section__title">Our Pricing Plans</div>
+        <p className="section__lead">Fixed price car servicing packages</p>
+        <div className="divider" />
+        <div className="pricing-grid">
+          {pricingPlans.map((plan) => (
+            <article className="pricing-card" key={plan.title}>
+              <h3>{plan.title}</h3>
+              <div className="pricing-card__price">{plan.price}</div>
+              <Image src={plan.image} alt="" width={374} height={233} className="pricing-card__image" />
+              <a className="button button--outline pricing-card__link" href="/pricing">
+                More Info
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="footer__cols">
+          <div>
+            <div className="section__title">Contact Info</div>
+            <ul className="footer__list">
+              <li>Northern Michigan</li>
+              <li>
+                <a href="tel:231-392-6204">231-392-6204</a>
+              </li>
+              <li>
+                <a href="mailto:mbexpertllc@gmail.com">mbexpertllc@gmail.com</a>
+              </li>
+            </ul>
+            <div className="section__title footer__title">Opening Hours</div>
+            <ul className="footer__list">
+              <li>8:00am- 10:00pm (All Days)</li>
+            </ul>
+          </div>
+          <div className="footer__gallery">
+            <Image
+              src="https://mbexpertllc.com/wp-content/uploads/2026/03/2149891383.jpg"
+              alt=""
+              width={1500}
+              height={1000}
+              className="footer__img"
+            />
+            <Image
+              src="https://mbexpertllc.com/wp-content/uploads/2026/03/11887-e1772742262479.jpg"
+              alt=""
+              width={1000}
+              height={1070}
+              className="footer__img"
+            />
+          </div>
+        </div>
+        <div className="footer__bottom">Copyright © 2026 | MB Experts LLC | All rights reserved</div>
+      </footer>
     </main>
   );
 }
