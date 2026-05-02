@@ -1,0 +1,23 @@
+{
+  "_id": "blog-mobile-diagnostics",
+  "_type": "blogPost",
+  "title": "How mobile diagnostics save time",
+  "slug": { "_type": "slug", "current": "how-mobile-diagnostics-save-time" },
+  "excerpt": "A practical look at why on-site diagnostics often beat a tow-to-shop workflow.",
+  "publishedAt": "2026-05-02T19:00:00.000Z",
+  "categories": ["Diagnostics", "Mobile Mechanic"],
+  "body": [
+    {
+      "_type": "block",
+      "_key": "b1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b1s1",
+          "text": "Mobile diagnostics help isolate the problem before parts are ordered or unnecessary towing happens."
+        }
+      ]
+    }
+  ]
+}

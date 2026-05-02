@@ -44,6 +44,78 @@ export const homePageQuery = /* groq */ `
   }
 `;
 
+export const servicesQuery = /* groq */ `
+  *[_type == "service"] | order(sortOrder asc, title asc){
+    _id,
+    title,
+    slug,
+    shortDescription,
+    description,
+    featuredImage,
+    featured,
+    sortOrder
+  }
+`;
+
+export const serviceBySlugQuery = /* groq */ `
+  *[_type == "service" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    shortDescription,
+    description,
+    featuredImage,
+    featured
+  }
+`;
+
+export const pricingPlansQuery = /* groq */ `
+  *[_type == "pricingPlan"] | order(featured desc, title asc){
+    _id,
+    title,
+    price,
+    summary,
+    features,
+    featured,
+    ctaLabel
+  }
+`;
+
+export const galleryItemsQuery = /* groq */ `
+  *[_type == "galleryItem"] | order(title asc){
+    _id,
+    title,
+    image,
+    alt,
+    category
+  }
+`;
+
+export const blogPostsQuery = /* groq */ `
+  *[_type == "blogPost"] | order(publishedAt desc, title asc){
+    _id,
+    title,
+    slug,
+    excerpt,
+    coverImage,
+    publishedAt,
+    categories
+  }
+`;
+
+export const blogPostBySlugQuery = /* groq */ `
+  *[_type == "blogPost" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    excerpt,
+    coverImage,
+    publishedAt,
+    body,
+    categories
+  }
+`;
+
 export const siteSettingsQuery = /* groq */ `
   *[_type == "siteSettings"][0]{
     companyName,

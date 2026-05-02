@@ -1,43 +1,38 @@
 import Image from "next/image";
+import { SiteChrome } from "../../components/site-chrome";
+import { sanityFetch, sanityImageUrl } from "../../lib/sanity/client";
+import { pageBySlugQuery, siteSettingsQuery } from "../../lib/sanity/queries";
 
-function chrome() {
-  return (
-    <>
-      <div className="topbar">
-        <div className="topbar__item">8:00am- 10:00pm (All Days)</div>
-        <a className="topbar__item" href="tel:231-392-6204">
-          Call Now/Text 231-392-6204
-        </a>
-        <div className="topbar__item">Northern Michigan</div>
-      </div>
-      <header className="header">
-        <a className="brand" href="/">
-          <Image src="https://mbexpertllc.com/wp-content/uploads/2026/03/image-removebg-preview-e1775584985293.png" alt="MB Expert LLC" width={483} height={283} className="brand__logo" />
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="/">Home</a>
-          <a href="/about-us">About Us</a>
-          <a href="/services">Services</a>
-          <a href="/blogs">Blogs</a>
-          <a href="/gallery">Gallery</a>
-          <a href="/contact-us">Contact Us</a>
-        </nav>
-        <a className="button button--solid header__cta" href="/contact-us">
-          Appointment
-        </a>
-      </header>
-    </>
-  );
-}
+type PageDocument = {
+  title?: string;
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  body?: Array<{
+    children?: Array<{ text?: string }>;
+  }>;
+  heroImage?: unknown;
+};
 
-export default function AboutUsPage() {
+export default async function AboutUsPage() {
+  const [page, siteSettings] = await Promise.all([
+    sanityFetch<PageDocument>(pageBySlugQuery, { slug: "about-us" }),
+    sanityFetch<{ companyName?: string; primaryPhone?: string; serviceArea?: string }>(siteSettingsQuery),
+  ]);
+
+  const paragraphs =
+    page?.body?.map((block) => block.children?.map((child) => child.text ?? "").join("").trim()).filter(Boolean) ?? [];
+
   return (
     <main className="site">
-      {chrome()}
+      <SiteChrome settings={siteSettings} />
       <section className="section section--split">
         <div className="about__imageWrap">
           <Image
-            src="https://mbexpertllc.com/wp-content/uploads/2026/03/1174.jpg"
+            src={
+              sanityImageUrl(page?.heroImage) ||
+              "https://mbexpertllc.com/wp-content/uploads/2026/03/1174.jpg"
+            }
             alt="MB Expert LLC"
             fill
             sizes="(max-width: 900px) 100vw, 40vw"
@@ -45,20 +40,15 @@ export default function AboutUsPage() {
           />
         </div>
         <div className="content-block">
-          <div className="section__title">About Us</div>
-          <p>
-            MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners
-            throughout Northern Michigan.
-          </p>
-          <p>
-            We understand how valuable your time is, which is why we bring modern auto service directly to you—at
-            your home, your workplace parking lot, or right at the location of an unexpected breakdown.
-          </p>
-          <p>
-            We don’t just guess and swap parts; we find the root cause of the problem. Our mobile service specializes
-            in in-depth diagnostics, electrical repair, engine systems, module programming, ADAS calibration, and
-            locksmith services.
-          </p>
+          <div className="section__title">{page?.heroTitle ?? "About Us"}</div>
+          {paragraphs.length > 0 ? (
+            paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+          ) : (
+            <>
+              <p>MB EXPERT LLC is a professional Mobile Mechanic service based in Traverse City, serving vehicle owners throughout Northern Michigan.</p>
+              <p>We don’t just guess and swap parts; we find the root cause of the problem with dealer-level diagnostics and mobile repair.</p>
+            </>
+          )}
         </div>
       </section>
     </main>

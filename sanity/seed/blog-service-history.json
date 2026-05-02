@@ -1,0 +1,23 @@
+{
+  "_id": "blog-service-history",
+  "_type": "blogPost",
+  "title": "Why service history matters",
+  "slug": { "_type": "slug", "current": "why-service-history-matters" },
+  "excerpt": "A consistent service history helps catch issues early and supports resale value.",
+  "publishedAt": "2026-04-30T19:00:00.000Z",
+  "categories": ["Maintenance"],
+  "body": [
+    {
+      "_type": "block",
+      "_key": "b1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b1s1",
+          "text": "Keeping records of oil changes, diagnostics, and repairs makes future troubleshooting simpler and improves confidence for the next owner."
+        }
+      ]
+    }
+  ]
+}

@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "mbexpertllc.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
     ],
   },
 };

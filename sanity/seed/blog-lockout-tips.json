@@ -1,0 +1,23 @@
+{
+  "_id": "blog-lockout-tips",
+  "_type": "blogPost",
+  "title": "What to do during a vehicle lockout",
+  "slug": { "_type": "slug", "current": "what-to-do-during-a-vehicle-lockout" },
+  "excerpt": "Basic steps to stay safe and avoid damaging the vehicle while waiting for locksmith help.",
+  "publishedAt": "2026-05-01T19:00:00.000Z",
+  "categories": ["Locksmith"],
+  "body": [
+    {
+      "_type": "block",
+      "_key": "b1",
+      "style": "normal",
+      "children": [
+        {
+          "_type": "span",
+          "_key": "b1s1",
+          "text": "Avoid forcing entry methods that can damage weather seals or the locking mechanism. A mobile locksmith can usually resolve it faster and safer."
+        }
+      ]
+    }
+  ]
+}
