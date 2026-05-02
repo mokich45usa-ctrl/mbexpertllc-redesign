@@ -82,23 +82,7 @@ export const homePage = defineType({
       name: "processSteps",
       title: "Process Steps",
       type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "string",
-            }),
-          ],
-        },
-      ],
+      of: [{ type: "processStep" }],
     }),
     defineField({
       name: "featuredTestimonials",

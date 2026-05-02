@@ -14,9 +14,9 @@ type GenericPage = {
 export default async function DynamicPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   const page = await sanityFetch<GenericPage>(pageBySlugQuery, { slug });
 
   if (!page) {
